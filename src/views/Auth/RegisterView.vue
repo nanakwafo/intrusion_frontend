@@ -9,6 +9,7 @@ const { authenticate } = useAuthStore();
 const formData = reactive({
   name: "",
   email: "",
+  phone_number:"",
   password: "",
   password_confirmation: "",
 });
@@ -59,7 +60,10 @@ Simple, fast, and beautifully crafted
         <input type="text" placeholder="Email" v-model="formData.email" />
         <p v-if="errors.email" class="error">{{ errors.email[0] }}</p>
       </div>
-
+<div>
+        <input type="text" placeholder="phone_number" v-model="formData.phone_number" />
+        <p v-if="errors.email" class="error">{{ errors.phone_number[0] }}</p>
+      </div>
       <div>
         <input
           type="password"
