@@ -3,7 +3,7 @@ import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { onMounted, reactive } from "vue";
 
-const { errors } = storeToRefs(useAuthStore());
+const { errors , waitForOtpMessage, loginTimeout } = storeToRefs(useAuthStore());
 const { authenticate } = useAuthStore();
 
 const formData = reactive({
@@ -44,10 +44,7 @@ Simple, fast, and beautifully crafted
   </section>
     <h1 class="title">Login to your account</h1>
 
-    <form
-      @submit.prevent="authenticate('login', formData)"
-      class="w-1/2 mx-auto space-y-6"
-    >
+    <form @submit.prevent="authenticate('login', formData)" class="w-1/2 mx-auto space-y-6">
       <div>
         <input type="text" placeholder="Email" v-model="formData.email" />
         <p v-if="errors.email" class="error">{{ errors.email[0] }}</p>
@@ -61,8 +58,11 @@ Simple, fast, and beautifully crafted
         />
         <p v-if="errors.password" class="error">{{ errors.password[0] }}</p>
       </div>
-
+       
       <button class="primary-btn">Login</button>
     </form>
+
+    <p v-if="waitForOtpMessage" class="success">{{waitForOtpMessage}} </p>
+    <p v-if="loginTimeout" class="success">{{loginTimeout}} </p>
   </main>
 </template>

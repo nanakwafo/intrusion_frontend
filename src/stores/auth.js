@@ -5,6 +5,8 @@ export const useAuthStore = defineStore("authStore", {
     return {
       user: null,
       errors: {},
+      waitForOtpMessage: null,
+      loginTimeout:null
     };
   },
   actions: {
@@ -24,11 +26,24 @@ export const useAuthStore = defineStore("authStore", {
     },
     /******************* Login or Register user *******************/
     async authenticate(apiRoute, formData) {
+      this.waitForOtpMessage= "An Otp message has been sent to your phone.Kindly approve via portal app";
+     
       const res = await fetch(`/api/${apiRoute}`, {
         method: "post",
         body: JSON.stringify(formData),
       });
-
+       if (!res.ok) {
+        // If server response is not OK (like 504), throw an error
+        if (res.status === 504) {
+          this.loginTimeout="login Expired . Try Again"
+          this.waitForOtpMessage=""
+          
+         // alert("Server is taking too long to respond (504 Gateway Timeout). Please try again later.");
+        } else {
+          alert(`Error: Server responded with status ${res.status}`);
+        }
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
       const data = await res.json();
       if (data.errors) {
         this.errors = data.errors;
