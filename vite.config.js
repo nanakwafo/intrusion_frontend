@@ -15,7 +15,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         // target: "http://127.0.0.1:8000",
-        target: "http://intrusion_api.test",
+        target: "http://172.236.115.26",
         changeOrigin: true,
         headers: {
           Accept: "application/json",

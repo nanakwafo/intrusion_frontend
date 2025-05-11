@@ -35,7 +35,7 @@ export const useAuthStore = defineStore("authStore", {
        if (!res.ok) {
         // If server response is not OK (like 504), throw an error
         if (res.status === 504) {
-          this.loginTimeout="login Expired . Try Again"
+          this.loginTimeout="login Expired or denied  . Try Again"
           this.waitForOtpMessage=""
           
          // alert("Server is taking too long to respond (504 Gateway Timeout). Please try again later.");
