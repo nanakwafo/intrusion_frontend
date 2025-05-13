@@ -26,7 +26,7 @@ export const useAuthStore = defineStore("authStore", {
     },
     /******************* Login or Register user *******************/
     async authenticate(apiRoute, formData) {
-      this.waitForOtpMessage= "An Otp message has been sent to your phone.Kindly approve via portal app";
+      
      
       const res = await fetch(`/api/${apiRoute}`, {
         method: "post",
@@ -48,6 +48,7 @@ export const useAuthStore = defineStore("authStore", {
       if (data.errors) {
         this.errors = data.errors;
       } else {
+        this.waitForOtpMessage= "An Otp message has been sent to your phone.Kindly approve via portal app";
         this.errors = {};
         localStorage.setItem("token", data.token);
         this.user = data.user;
